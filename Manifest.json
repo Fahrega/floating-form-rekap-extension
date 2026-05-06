@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Floating Form Rekap",
+  "version": "1.0",
+  "description": "Formulir mengambang untuk merekap data pesanan ke Spreadsheet.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_title": "Buka/Tutup Form Rekap"
+  },
+  "background": {
+    "service_worker": "background_script.js"
+  }
+}
