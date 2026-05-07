@@ -1,9 +1,13 @@
 chrome.action.onClicked.addListener((tab) => {
-  if (!tab.url || tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://') || tab.url.startsWith('edge://') || tab.url.startsWith('about:')) {
-    return;
-  }
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    files: ['Content_script.js']
-  }).catch(() => {});
+    chrome.tabs.sendMessage(tab.id, { action: 'toggle' }, () => {
+        if (chrome.runtime.lastError) {
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                func: () => { window.__rekapAutoShow = true; }
+            }).then(() => chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                files: ['Content_script.js']
+            })).catch(() => {});
+        }
+    });
 });
